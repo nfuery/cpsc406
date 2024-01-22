@@ -15,9 +15,9 @@ class Automaton:
         self.accept_states = accept_states
         self.transitions = transitions
 
-def read_automaton(file_name):
+def read_nfa(file_name):
     """
-    Reads an automaton (NFA or DFA) from a file.
+    Reads a NFA from a file.
     """
     with open(file_name, 'r') as file:
         lines = file.readlines()
@@ -66,9 +66,9 @@ def convert_nfa_to_dfa(nfa):
 
     return dfa
 
-def write_automaton(automaton, file_name):
+def write_dfa(automaton, file_name):
     """
-    Writes a given automaton (NFA or DFA) to a file.
+    Writes a given DFA to a file.
     """
     with open(file_name, 'w') as file:
         file.write('\t'.join(['{' + ', '.join(state) + '}' for state in automaton.states]) + '\n')
@@ -85,9 +85,9 @@ def main():
     parser.add_argument('input_file', help='The input file containing the NFA specification')
     args = parser.parse_args()
 
-    nfa = read_automaton(args.input_file)
+    nfa = read_nfa(args.input_file)
     dfa = convert_nfa_to_dfa(nfa)
-    write_automaton(dfa, args.input_file.replace('.nfa', '.DFA'))
+    write_dfa(dfa, args.input_file.replace('.nfa', '.DFA'))
 
 if __name__ == '__main__':
     main()
