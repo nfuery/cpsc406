@@ -1,5 +1,6 @@
 import argparse
 import re
+from itertools import combinations
 
 # Removed unused State class
 
