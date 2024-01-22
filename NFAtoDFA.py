@@ -63,7 +63,7 @@ def write_automaton(automaton: Automaton, file_name: str) -> None:
     Writes a given automaton (NFA or DFA) to a file.
     """
     with open(file_name, 'w') as file:
-        file.write('\t'.join(automaton.states) + '\n')
+        file.write('\t'.join(map(str, automaton.states)) + '\n')
         file.write('\t'.join(automaton.symbols) + '\n')
         file.write(automaton.start_state + '\n')
         file.write('\t'.join(automaton.accept_states) + '\n')
