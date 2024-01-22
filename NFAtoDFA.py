@@ -45,7 +45,7 @@ def convert_nfa_to_dfa(nfa: Automaton) -> Automaton:
             # The new DFA state is the union of the NFA transitions for each state in the subset
             new_dfa_state = set().union(*[nfa.transitions.get((state, symbol), set()) for state in dfa_state])
             # Add the transition to the DFA transitions
-            dfa_transitions[(dfa_state, symbol)] = new_dfa_state
+            dfa_transitions[(frozenset(dfa_state), symbol)] = new_dfa_state
 
     # The start state of the DFA is the same as the NFA
     dfa_start_state = nfa.start_state
