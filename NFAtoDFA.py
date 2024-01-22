@@ -66,7 +66,7 @@ def write_automaton(automaton: Automaton, file_name: str) -> None:
         file.write('\t'.join(map(str, automaton.states)) + '\n')
         file.write('\t'.join(automaton.symbols) + '\n')
         file.write(automaton.start_state + '\n')
-        file.write('\t'.join(automaton.accept_states) + '\n')
+        file.write('\t'.join(map(str, automaton.accept_states)) + '\n')
         file.write('BEGIN\n')
         for state, transitions in automaton.transitions.items():
             file.write(f'{state}, {transitions}\n')
