@@ -63,10 +63,10 @@ def write_automaton(automaton: Automaton, file_name: str) -> None:
     Writes a given automaton (NFA or DFA) to a file.
     """
     with open(file_name, 'w') as file:
-        file.write('\t'.join(['{' + ', '.join(state) + '}' if state else '{EM}' for state in automaton.states]) + '\n')
+        file.write('\t'.join(['{' + ', '.join(state) + '}' for state in automaton.states]) + '\n')
         file.write('\t'.join(automaton.symbols) + '\n')
-        file.write('{' + ', '.join(automaton.start_state) + '}' if automaton.start_state else '{EM}' + '\n')
-        file.write('\t'.join(['{' + ', '.join(state) + '}' if state else '{EM}' for state in automaton.accept_states]) + '\n')
+        file.write('{' + ', '.join(automaton.start_state) + '}' + '\n')
+        file.write('\t'.join(['{' + ', '.join(state) + '}' for state in automaton.accept_states]) + '\n')
         file.write('BEGIN\n')
         for (state, symbol), transitions in automaton.transitions.items():
             file.write('{' + ', '.join(state) + '}, ' + symbol + ' = {' + ', '.join(transitions) + '}' if transitions else '{EM}' + '\n')
