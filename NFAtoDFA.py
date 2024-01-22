@@ -31,8 +31,31 @@ def convert_nfa_to_dfa(nfa: Automaton) -> Automaton:
     """
     Converts a given NFA to a DFA.
     """
-    # TODO: Implement NFA to DFA conversion
-    raise NotImplementedError("NFA to DFA conversion not implemented yet.")
+    # Create a list of all possible states (subsets of the NFA states)
+    dfa_states = [set(states) for i in range(len(nfa.states) + 1) for states in combinations(nfa.states, i)]
+    
+    # Initialize the DFA transitions as an empty dictionary
+    dfa_transitions = {}
+
+    # For each DFA state (which is a subset of NFA states)
+    for dfa_state in dfa_states:
+        # For each symbol in the alphabet
+        for symbol in nfa.symbols:
+            # The new DFA state is the union of the NFA transitions for each state in the subset
+            new_dfa_state = set().union(*[nfa.transitions.get((state, symbol), set()) for state in dfa_state])
+            # Add the transition to the DFA transitions
+            dfa_transitions[(dfa_state, symbol)] = new_dfa_state
+
+    # The start state of the DFA is the same as the NFA
+    dfa_start_state = nfa.start_state
+
+    # The accept states of the DFA are those that contain at least one NFA accept state
+    dfa_accept_states = [dfa_state for dfa_state in dfa_states if any(state in dfa_state for state in nfa.accept_states)]
+
+    # Create the DFA
+    dfa = Automaton(dfa_states, nfa.symbols, dfa_start_state, dfa_accept_states, dfa_transitions)
+
+    return dfa
 
 def write_automaton(automaton: Automaton, file_name: str) -> None:
     """
