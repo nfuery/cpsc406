@@ -33,7 +33,10 @@ def convert_nfa_to_dfa(nfa: Automaton) -> Automaton:
     Converts a given NFA to a DFA.
     """
     # Create a list of all possible states (subsets of the NFA states)
-    dfa_states = [set(states) for i in range(len(nfa.states) + 1) for states in combinations(nfa.states, i)]
+    dfa_states = []
+    for i in range(len(nfa.states) + 1):
+        for states in combinations(nfa.states, i):
+            dfa_states.append(set(states))
     
     # Initialize the DFA transitions as an empty dictionary
     dfa_transitions = {}
@@ -43,7 +46,9 @@ def convert_nfa_to_dfa(nfa: Automaton) -> Automaton:
         # For each symbol in the alphabet
         for symbol in nfa.symbols:
             # The new DFA state is the union of the NFA transitions for each state in the subset
-            new_dfa_state = set().union(*[nfa.transitions.get((state, symbol), set()) for state in dfa_state])
+            new_dfa_state = set()
+            for state in dfa_state:
+                new_dfa_state = new_dfa_state.union(nfa.transitions.get((state, symbol), set()))
             # Add the transition to the DFA transitions
             dfa_transitions[(frozenset(dfa_state), symbol)] = new_dfa_state
 
@@ -51,7 +56,10 @@ def convert_nfa_to_dfa(nfa: Automaton) -> Automaton:
     dfa_start_state = nfa.start_state
 
     # The accept states of the DFA are those that contain at least one NFA accept state
-    dfa_accept_states = [dfa_state for dfa_state in dfa_states if any(state in dfa_state for state in nfa.accept_states)]
+    dfa_accept_states = []
+    for dfa_state in dfa_states:
+        if any(state in dfa_state for state in nfa.accept_states):
+            dfa_accept_states.append(dfa_state)
 
     # Create the DFA
     dfa = Automaton(dfa_states, nfa.symbols, dfa_start_state, dfa_accept_states, dfa_transitions)
