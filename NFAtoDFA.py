@@ -69,7 +69,7 @@ def write_automaton(automaton: Automaton, file_name: str) -> None:
         file.write('\t'.join(['{' + ', '.join(state) + '}' for state in automaton.accept_states]) + '\n')
         file.write('BEGIN\n')
         for (state, symbol), transitions in automaton.transitions.items():
-            file.write('{' + ', '.join(state) + '}, ' + symbol + ' = {' + ', '.join(transitions) + '}' if transitions else '{EM}' + '\n')
+            file.write('{' + ', '.join(state) + '}, ' + symbol + ' = {' + ', '.join(transitions) + '}\n')
         file.write('END\n')
 
 def main():
