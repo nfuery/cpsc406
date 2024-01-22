@@ -15,7 +15,7 @@ class Automaton:
         self.accept_states = accept_states
         self.transitions = transitions
 
-def read_automaton(file_name: str) -> Automaton:
+def read_automaton(file_name):
     """
     Reads an automaton (NFA or DFA) from a file.
     """
@@ -28,7 +28,7 @@ def read_automaton(file_name: str) -> Automaton:
         transitions = {line.strip().split(', ')[0]: line.strip().split(' = ')[1] for line in lines[5:-1]}
         return Automaton(states, symbols, start_state, accept_states, transitions)
 
-def convert_nfa_to_dfa(nfa: Automaton) -> Automaton:
+def convert_nfa_to_dfa(nfa):
     """
     Converts a given NFA to a DFA.
     """
@@ -66,7 +66,7 @@ def convert_nfa_to_dfa(nfa: Automaton) -> Automaton:
 
     return dfa
 
-def write_automaton(automaton: Automaton, file_name: str) -> None:
+def write_automaton(automaton, file_name):
     """
     Writes a given automaton (NFA or DFA) to a file.
     """
