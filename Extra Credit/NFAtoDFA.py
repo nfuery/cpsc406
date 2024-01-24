@@ -71,13 +71,24 @@ def write_dfa(automaton, file_name):
     Writes a given DFA to a file.
     """
     with open(file_name, 'w') as file:
-        file.write('\t'.join(['{' + ', '.join(state) + '}' for state in automaton.states]) + '\n')
+        file.write('\t')
+        for state in automaton.states:
+            if(state is None):
+                # file.write(', '.join('{EM}'))
+                print(', '.join(['{EM}']))
+            else:
+                print(', '.join(map(str,state)))
+            # file.write(', '.join(state))
+        file.write('\n')
         file.write('\t'.join(automaton.symbols) + '\n')
-        file.write('{' + ', '.join(automaton.start_state) + '}' + '\n')
-        file.write('\t'.join(['{' + ', '.join(state) + '}' for state in automaton.accept_states]) + '\n')
+        file.write(', '.join(automaton.start_state) + '\n')
+        file.write('\t')
+        for state in automaton.accept_states:
+            file.write(', '.join(state))
+        file.write('\n')
         file.write('BEGIN\n')
         for (state, symbol), transitions in automaton.transitions.items():
-            file.write('{' + ', '.join(state) + '}, ' + symbol + ' = {' + ', '.join(transitions) + '}\n')
+            file.write(', '.join(state) + ', ' + symbol + ' = ' + ', '.join(transitions) + '\n')
         file.write('END\n')
 
 def main():
